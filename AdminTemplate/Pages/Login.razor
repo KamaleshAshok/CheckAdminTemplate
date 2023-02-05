@@ -1,0 +1,81 @@
+﻿@layout LoginLayout
+@page "/login"
+@using Syncfusion.Blazor.Inputs
+@using AdminTemplate.Data
+@using Syncfusion.Blazor.Notifications
+
+<div class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Keep</b>SL</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your trading journey</p>
+
+                @*                <form action="../../index3.html" method="post">*@
+                <EditForm Model="@loginModel" OnValidSubmit="SaveAsync">
+                    <div class="input-group mb-3">
+                        <SfTextBox CssClass="e-outline" @bind-Value="loginModel.EmailAddress" Placeholder="Email Address" Type="InputType.Email" FloatLabelType="@FloatLabelType.Auto"></SfTextBox>
+                    </div>
+                    <div class="input-group mb-3">
+                        @* <input type="password" class="form-control" placeholder="Password">*@
+                        <SfTextBox CssClass="e-comthing" Value="@loginModel.Password" Placeholder="Password" Type="InputType.Password"></SfTextBox>
+                        @*                        <div class="input-group-append">
+                        <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                        </div>
+                        </div>*@
+                    </div>
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    @* </form>*@
+                </EditForm>
+
+                <div class="social-auth-links text-center mb-3">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                    </a>
+                </div>
+                <!-- /.social-auth-links -->
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>
+                <p class="mb-0">
+                    <a href="/Register" class="text-center">Register a new membership</a>
+                </p>
+            </div>
+            <!-- /.login-card-body -->
+            @if (IsLogInFailed)
+            {
+                <SfMessage Severity="MessageSeverity.Error">Email or Password is Invalid</SfMessage>
+            }
+        </div>
+    </div>
+
+</div>
+
+@code {
+    public LoginModel loginModel { get; set; } = new LoginModel();
+    public bool IsLogInFailed = false;
+
+    private async Task SaveAsync()
+    {
+        if (String.IsNullOrEmpty(loginModel.EmailAddress) || String.IsNullOrEmpty(loginModel.Password))
+        {
+            IsLogInFailed = true;
+        }
+        else
+        {
+            IsLogInFailed = false;
+        }
+    }
+}
